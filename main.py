@@ -1,53 +1,53 @@
+# import requests as req
 from os import path, system
-from colorama import Fore, init
-from Plugins.api_list import handler
-from Plugins.functions import Functions
+
+
+if path.exists("./requirements.txt"):
+    with open("./requirements.txt") as file:
+        libs = [i.split("==")[0] for i in file.readlines()]
+    
+    for lib in libs:
+        print(lib)
+        try:
+            __import__(lib)
+        except ModuleNotFoundError:
+            system("pip install "+lib)
+
+
 from pystyle import Col, Center, System
+from Plugins.api_list import handler
+from colorama import Fore
+from Plugins.functions import Functions
 
-init(autoreset=True)
+r, g = Fore.LIGHTGREEN_EX, Fore.LIGHTYELLOW_EX
 
-g = "\033[1m"
-r = "\033[1m"
-reset = "\033[0m"
-
-def install_requirements():
-    if path.exists("./requirements.txt"):
-        with open("./requirements.txt") as file:
-            libs = [i.split("==")[0] for i in file.readlines()]
-        
-        for lib in libs:
-            try:
-                __import__(lib)
-            except ModuleNotFoundError:
-                system("pip install " + lib)
-
-install_requirements()
-
-def display_logo():
+if __name__ == "__main__":
     logo = f'''
-     {g}█████{reset}╗ {g}██{reset}╗     {g}███████{reset}╗{g}██████{reset}╗  {g}███████{reset}╗  {g}████████{reset}╗   {g}█████{reset}╗
-    {r}██╔══██{reset}╗{r}██║     ██╔════╝██╔══██{reset}╗ {r}██╔════╝  ╚════╗██{reset}║  {r}██╔══██{reset}╗
-    {g}███████{reset}║{g}██║     █████╗  ██████╔╝ █████╗       ███╔═╝  ███████{reset}║
-    {r}██╔══██{reset}║{r}██║     ██╔══╝  ██╔══██{reset}╗ {r}██╔══╝    ███╔══╝    ██╔══██{reset}║
-    {g}██║  ██║███████╗███████{reset}╗{g}██║  ██║ ███████╗  ███████{reset}╗   {g}██║  ██║
+     █████╗ ██╗     ███████╗██████╗  ███████╗  ████████╗   █████╗
+    ██╔══██╗██║     ██╔════╝██╔══██╗ ██╔════╝  ╚════╗██║  ██╔══██╗
+    ███████║██║     █████╗  ██████╔╝ █████╗       ███╔═╝  ███████║
+    ██╔══██║██║     ██╔══╝  ██╔══██╗ ██╔══╝    ███╔══╝    ██╔══██║
+    ██║  ██║███████╗███████╗██║  ██║ ███████╗  ███████╗   ██║  ██║
     ╚═╝  ╚═╝╚══════╝╚══════╝╚═╝  ╚═╝ ╚══════╝  ╚══════╝   ╚═╝  ╚═╝
 
-    {g}██████{reset}╗  {g}█████{reset}╗ {g}███{reset}╗   {g}███{reset}╗{g}██████{reset}╗ {g}███████{reset}╗{g}██████{reset}╗ 
-    {g}██{reset}╔══{g}██{reset}╗{g}██{reset}╔══{g}██{reset}╗{g}████{reset}╗ {g}████{reset}║{g}██{reset}╔══{g}██{reset}╗{g}██╔════╝{g}██{reset}╔══{g}██{reset}╗
-    {g}██████{reset}╦╝{g}██{reset}║  {g}██{reset}║{g}██{reset}╔{g}████{reset}╔{g}██{reset}║{g}██████{reset}╦╝{g}█████{reset}╗  {g}██████{reset}╔╝
-    {g}██{reset}╔══{g}██{reset}╗{g}██{reset}║  {g}██{reset}║{g}██{reset}║╚{g}██{reset}╔╝{g}██{reset}║{g}██╔══{reset}{g}██{reset}╗{g}██╔══╝  {g}██╔══{reset}{g}██{reset}╗
-    {g}██████{reset}╦╝╚{g}█████{reset}╔╝{g}██{reset}║ ╚═╝ {g}██{reset}║{g}██████{reset}╦╝{g}███████{reset}╗{g}██{reset}║  {g}██{reset}║
+        
+    {g}██████{r}╗  {g}█████{r}╗ {g}███{r}╗   {g}███{r}╗{g}██████{r}╗ {g}███████{r}╗{g}██████{r}╗ 
+    {g}██{r}╔══{g}██{r}╗{g}██{r}╔══{g}██{r}╗{g}████{r}╗ {g}████{r}║{g}██{r}╔══{g}██{r}╗{g}██{r}╔════╝{g}██{r}╔══{g}██{r}╗
+    {g}██████{r}╦╝{g}██{r}║  {g}██{r}║{g}██{r}╔{g}████{r}╔{g}██{r}║{g}██████{r}╦╝{g}█████{r}╗  {g}██████{r}╔╝
+    {g}██{r}╔══{g}██{r}╗{g}██{r}║{g}  ██{r}║{g}██{r}║╚{g}██{r}╔╝{g}██{r}║{g}██{r}╔══{g}██{r}╗{g}██{r}╔══╝{g}  ██{r}╔══{g}██{r}╗
+    {g}██████{r}╦╝╚{g}█████{r}╔╝{g}██{r}║ ╚═╝ {g}██{r}║{g}██████{r}╦╝{g}███████{r}╗{g}██{r}║  {g}██{r}║
     {r}╚═════╝  ╚════╝ ╚═╝     ╚═╝╚═════╝ ╚══════╝╚═╝  ╚═╝
 
                     Alireza.Nasiri_py
-     {reset}
-    '''
-    System.Clear()
-    print(Center.XCenter(logo))
+     '''
 
-def main():
+
+
+
     while True:
-        display_logo()
+        System.Clear()
+        print(Center.XCenter(logo))
+
         try:
             proxy_state = Fore.GREEN + "Enabled" if Functions.proxy_state() else Fore.RED + "Disabled"
             choices = {
@@ -62,14 +62,12 @@ def main():
             
             print()
             choice = Functions.get_input(f"{Fore.CYAN}[=]{Col.gray} Enter Your Choice: {Col.green}", lambda x: x in [str(i) for i in choices])
-            number = Functions.get_input(f"{Fore.CYAN}[=]{Col.gray} Enter the phone number {Fore.CYAN}[9xxxxxxxxx]{Col.gray}: {Col.green}", 
-                                         checker=lambda x: x != "" and x.isnumeric() and x.startswith("9") and len(x) == 10)
+            number = Functions.get_input(f"{Fore.CYAN}[=]{Col.gray} Enter the phone number {Fore.CYAN}[9xxxxxxxxx]{Col.gray}: {Col.green}", checker=lambda x: x != "" and x.isnumeric() and x.startswith("9") and len(x) == 10)
             count = Functions.get_input(f"{Fore.CYAN}[=]{Col.gray} Enter spam count: {Col.green}", lambda x: x.isnumeric() and int(x) >= 0)
 
             Functions.start(choices[choice], number, int(count))
+
+
         except KeyboardInterrupt:
             print("\n" + Fore.BLUE, "Exiting...")
-            break
-
-if __name__ == "__main__":
-    main()
+            exit()
